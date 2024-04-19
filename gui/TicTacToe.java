@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Component;
+import java.awt.Dimension;
 
 public class TicTacToe {
 
@@ -52,7 +53,7 @@ public class TicTacToe {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 477, 329);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[10%,grow][10%,grow][10%,grow]", "[7%,grow][7%,grow][7%,grow]"));
+		frame.getContentPane().setLayout(new MigLayout("", "[10%][1%][grow]", "[7%][1%][grow]"));
 		
 		JPanel controlPanel = new JPanel();
 		frame.getContentPane().add(controlPanel, "cell 0 0 3 1,grow");
@@ -75,6 +76,8 @@ public class TicTacToe {
 		infoPanel.add(textArea_1, BorderLayout.CENTER);
 		
 		JPanel tttPanel = new JPanel();
+		tttPanel.setMaximumSize(new Dimension(390, 390));
+		tttPanel.setMinimumSize(new Dimension(390, 390));
 		frame.getContentPane().add(tttPanel, "cell 1 1 2 2,grow");
 		tttPanel.setLayout(new GridLayout(3, 3, 0, 0));
 	}
