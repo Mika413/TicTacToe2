@@ -9,47 +9,88 @@ public class PlayControl {
     
 
     public void reset() {
-	//test
+		for(int [] row : pField){
+			Array.fill(row, none);
+		}
     }
 
     private void setPoint(int pos, int type) {
-      
+		int row = pos / 3;
+        int col = pos % 3;
+        pField[row][col] = type;
     }
 
     public void playerSet(int nr) {
-  
+		setPoint(nr, player);
     }
 
     public void computerSet(int nr) {
-       
+		setPoint(nr, computer);
     }
 
     public boolean fieldFree(int nr) {
-    	return true;
+    	int row = nr / 3;
+        int col = nr % 3;
+        if (pField[row][col] == none){
+			return true;
+			}
+		else {
+			return false; 
+		}
     }
 
     private int winnerIs() {
+		for (int i = 0; i < 3; i++) {
+            if (pField[i][0] == pField[i][1] && pField[i][1] == pField[i][2] && pField[i][0] != none) {
+                return pField[i][0];
+            }
+        }
 
+        for (int i = 0; i < 3; i++) {
+            if (pField[0][i] == pField[1][i] && pField[1][i] == pField[2][i] && pField[0][i] != none) {
+                return pField[0][i];
+            }
+        }
+
+        if (pField[0][0] == pField[1][1] && pField[1][1] == pField[2][2] && pField[0][0] != none) {
+            return pField[0][0];
+        }
+        if (pField[0][2] == pField[1][1] && pField[1][1] == pField[2][0] && pField[0][2] != none) {
+            return pField[0][2];
+        }
         return none;
     }
 
     public boolean gameOver() {
-   
-        return false;
+		for (int[] row : pField) {
+            for (int cell : row) {
+                if (cell == none) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public boolean playerHasWon() {
-
-        return false;
+		if (winnerIs() == player){
+			return true;
+		}
+		else{
+			return false;
+		}
     }
 
     public boolean computerHasWon() {
-
-        return false;
+		if (winnerIs() == computer){
+			return true;
+		}
+		else{
+			return false;
+		}
     }
 
     public int[][] getBoard() {
-        
-    	return new int[0][0];
+    	return pField;
     }
 }
