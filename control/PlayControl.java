@@ -9,7 +9,7 @@ public class PlayControl {
     
 
     public void reset() {
-
+	//test
     }
 
     private void setPoint(int pos, int type) {
