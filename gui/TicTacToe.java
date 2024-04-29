@@ -17,8 +17,9 @@ import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Component;
 import java.awt.Dimension;
-
-public class TicTacToe {
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+public class TicTacToe implements GuiCallback{
 
 	private JFrame frame;
 	private TTField fields;
@@ -85,6 +86,37 @@ public class TicTacToe {
 		tttPanel.setMinimumSize(new Dimension(390, 390));
 		frame.getContentPane().add(tttPanel, "cell 1 1 2 2,grow");
 		tttPanel.setLayout(new GridLayout(3, 3, 0, 0));
+		
+		JButton btnFeld1 = new JButton("");
+		btnFeld1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		tttPanel.add(btnFeld1);
+		
+		JButton btnFeld2 = new JButton("");
+		tttPanel.add(btnFeld2);
+		
+		JButton btnFeld3 = new JButton("");
+		tttPanel.add(btnFeld3);
+		
+		JButton btnFeld4 = new JButton("");
+		tttPanel.add(btnFeld4);
+		
+		JButton btnFeld5 = new JButton("");
+		tttPanel.add(btnFeld5);
+		
+		JButton btnFeld6 = new JButton("");
+		tttPanel.add(btnFeld6);
+		
+		JButton btnFeld7 = new JButton("");
+		tttPanel.add(btnFeld7);
+		
+		JButton btnFeld8 = new JButton("");
+		tttPanel.add(btnFeld8);
+		
+		JButton btnFeld9 = new JButton("");
+		tttPanel.add(btnFeld9);
 	}
 	
     private void createTTFields() {
@@ -107,7 +139,7 @@ public class TicTacToe {
 
  
     private boolean checkGameOver() {
-		gameOver(); 
+    	return false;
     }
 
 
@@ -119,7 +151,6 @@ public class TicTacToe {
 
     }
 	private void RestartActionPerformed(java.awt.event.ActionEvent evt){
-
-		reset();
-
+		
 	}
+}
