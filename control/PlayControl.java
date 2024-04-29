@@ -9,8 +9,10 @@ public class PlayControl {
     
 
     public void reset() {
-		for(int [] row : pField){
-			Array.fill(row, none);
+		for(int i=1; i>=3; i--){
+			for(int j=1; j>=3; i--){
+			pField[i][j] = none;
+			}
 		}
     }
 
