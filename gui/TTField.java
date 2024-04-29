@@ -11,7 +11,6 @@ public class TTField {
     public TTField(int nr, GuiCallback parent) {
         this.nr = nr;
         this.myParent = parent;
-        this.myTurn = false;
     }
 
     public void setType(int type) {
