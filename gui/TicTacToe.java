@@ -120,7 +120,5 @@ public class TicTacToe {
 
     }
 	private void RestartActionPerformed(java.awt.event.ActionEvent evt){
-		for(int i=0; i<=8; i++){
-
-		}
+		reset();
 	}
