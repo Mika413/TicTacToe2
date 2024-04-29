@@ -107,8 +107,7 @@ public class TicTacToe {
 
  
     private boolean checkGameOver() {
-
-        return false; 
+		gameOver(); 
     }
 
 
@@ -121,6 +120,5 @@ public class TicTacToe {
     }
 	private void RestartActionPerformed(java.awt.event.ActionEvent evt){
 		for(i=0; i<=8; i++){
-			i=0;
 		}
 	}
