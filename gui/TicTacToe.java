@@ -61,6 +61,11 @@ public class TicTacToe {
 		
 		JButton btnPlay = new JButton("Neues Spiel");
 		controlPanel.add(btnPlay, BorderLayout.WEST);
+		btnPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RestartActionPerformed(evt);
+            }
+        });
 		
 		JButton btnExit = new JButton("Exit");
 		controlPanel.add(btnExit, BorderLayout.EAST);
@@ -114,4 +119,8 @@ public class TicTacToe {
     public void playerHasChosen(int nr) {
 
     }
-}
+	private void RestartActionPerformed(java.awt.event.ActionEvent evt){
+		for(i=0; i<=8; i++){
+			i=0;
+		}
+	}
