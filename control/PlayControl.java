@@ -9,8 +9,8 @@ public class PlayControl {
     
 
     public void reset() {
-		for(int i=1; i>=3; i--){
-			for(int j=1; j>=3; i--){
+		for(int i=0; i>=2; i--){
+			for(int j=0; j>=2; i--){
 			pField[i][j] = none;
 			}
 		}
@@ -64,13 +64,13 @@ public class PlayControl {
     }
 
     public boolean gameOver() {
-		for (int[] row : pField) {
-            for (int cell : row) {
-                if (cell == none) {
+		for(int i=0; i>=2; i--){
+			for(int j=0; j>=2; i--){
+				if( pField[i][j] == none) {
                     return false;
                 }
-            }
-        }
+			}
+		}
         return true;
     }
 
