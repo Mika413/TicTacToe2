@@ -28,6 +28,7 @@ public class TicTacToe implements GuiCallback{
     private JTextArea textArea;
     private Timer timer;
     private Random rand;
+	private static JButton btnPlay;
     
     private int winsForYou;
     private int winsForComputer;
@@ -51,8 +52,9 @@ public class TicTacToe implements GuiCallback{
 	}
 
 	private void initialize() {
+		control = new PlayControl();
 		frame = new JFrame();
-		frame.setBounds(100, 100, 477, 329);
+		frame.setBounds(100, 100, 477, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new MigLayout("", "[10%][1%][grow]", "[7%][1%][grow]"));
 		
@@ -60,21 +62,16 @@ public class TicTacToe implements GuiCallback{
 		frame.getContentPane().add(controlPanel, "cell 0 0 3 1,grow");
 		controlPanel.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnPlay = new JButton("Neues Spiel");
+		btnPlay = new JButton("Neues Spiel");
 		controlPanel.add(btnPlay, BorderLayout.WEST);
-		btnPlay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RestartActionPerformed(evt);
-            }
+		btnPlay.addActionListener(e -> {
+            btnPlay.setEnabled(false);
+            control.reset();
         });
 		
 		JButton btnExit = new JButton("Exit");
 		controlPanel.add(btnExit, BorderLayout.EAST);
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
+		btnExit.addActionListener(e -> System.exit(0));
 		
 		JLabel label1 = new JLabel("");
 		controlPanel.add(label1, BorderLayout.CENTER);
@@ -155,7 +152,8 @@ public class TicTacToe implements GuiCallback{
     public void playerHasChosen(int nr) {
 
     }
-	private void RestartActionPerformed(java.awt.event.ActionEvent evt){
-		
+
+	public static void enablePlayButton() {
+		btnPlay.setEnabled(true);
 	}
 }

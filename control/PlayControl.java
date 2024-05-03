@@ -9,9 +9,9 @@ public class PlayControl {
     
 
     public void reset() {
-		for(int i=0; i>=2; i--){
-			for(int j=0; j>=2; i--){
-			pField[i][j] = none;
+		for(int i=0; i<3; i++){
+			for(int j=0; j<3; j++){
+			    pField[i][j] = none;
 			}
 		}
     }
@@ -33,9 +33,9 @@ public class PlayControl {
     public boolean fieldFree(int nr) {
     	int row = nr / 3;
         int col = nr % 3;
-        if (pField[row][col] == none){
+        if (pField[row][col] == none) {
 			return true;
-			}
+        }
 		else {
 			return false; 
 		}
@@ -64,8 +64,8 @@ public class PlayControl {
     }
 
     public boolean gameOver() {
-		for(int i=0; i>=2; i--){
-			for(int j=0; j>=2; i--){
+		for(int i=0; i<3; i++){
+			for(int j=0; j<3; j++){
 				if( pField[i][j] == none) {
                     return false;
                 }
