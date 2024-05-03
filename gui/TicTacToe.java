@@ -70,6 +70,11 @@ public class TicTacToe implements GuiCallback{
 		
 		JButton btnExit = new JButton("Exit");
 		controlPanel.add(btnExit, BorderLayout.EAST);
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		
 		JLabel label1 = new JLabel("");
 		controlPanel.add(label1, BorderLayout.CENTER);
