@@ -14,13 +14,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import control.PlayControl;
 import net.miginfocom.swing.MigLayout;
 import cPlayer.ComputerPlayer;
 import cPlayer.VerySimplePlayer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TicTacToe implements GuiCallback{
 
@@ -57,14 +56,14 @@ public class TicTacToe implements GuiCallback{
 		control = new PlayControl();
         computerPlayer = new VerySimplePlayer(control);
 		frame = new JFrame();
-		frame.setBounds(100, 100, 458, 450);
+		frame.setBounds(100, 100, 443, 493);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[10%][1%][grow]", "[7%][1%][grow]"));
+		frame.getContentPane().setLayout(new MigLayout("", "[10%][1%][grow]", "[7%][grow][1%][grow]"));
         
-                JPanel controlPanel = new JPanel();
-                frame.getContentPane().add(controlPanel, "cell 2 0");
-                controlPanel.setLayout(new BorderLayout(0, 0));
-                
+        JPanel controlPanel = new JPanel();
+        frame.getContentPane().add(controlPanel, "cell 0 0 3 2,grow");
+        controlPanel.setLayout(new BorderLayout(0, 0));
+        
         JButton btnPlay = new JButton("Neues Spiel");
         controlPanel.add(btnPlay, BorderLayout.WEST);
         btnPlay.addActionListener(new ActionListener() {
@@ -76,16 +75,19 @@ public class TicTacToe implements GuiCallback{
             }
         });
         
-                JButton btnExit = new JButton("Exit");
-                controlPanel.add(btnExit, BorderLayout.EAST);
-                btnExit.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        System.exit(0);
-                    }
-                });
+        JButton btnExit = new JButton("Exit");
+        controlPanel.add(btnExit, BorderLayout.EAST);
+        btnExit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        
+        JLabel label1 = new JLabel("");
+        controlPanel.add(label1, BorderLayout.CENTER);
         
         JPanel infoPanel = new JPanel();
-		frame.getContentPane().add(infoPanel, "cell 0 1 1 2,grow");
+		frame.getContentPane().add(infoPanel, "cell 0 2 1 2,grow");
 		infoPanel.setLayout(new BorderLayout(0, 0));
 		
 		JTextArea textArea_1 = new JTextArea();
@@ -94,7 +96,7 @@ public class TicTacToe implements GuiCallback{
         JPanel boardPanel = new JPanel(new GridLayout(3, 3));
         boardPanel.setMaximumSize(new Dimension(390, 390));
         boardPanel.setMinimumSize(new Dimension(390, 390));
-		frame.getContentPane().add(boardPanel, "cell 1 1 2 2,grow");
+		frame.getContentPane().add(boardPanel, "cell 1 2 2 2,grow");
 		boardPanel.setLayout(new GridLayout(3, 3, 0, 0));
 
         
@@ -200,11 +202,12 @@ public class TicTacToe implements GuiCallback{
                 SwingUtilities.invokeLater(() -> {
                     updateButtons();
                 });
-               disablePlayer();
-               startTimerForComputer();
+                disablePlayer();
+                startTimerForComputer();
                 
             }
         }
     }
-	
+    
 }
+	
