@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import cPlayer.VerySimplePlayer;
 import java.awt.Graphics;
@@ -26,14 +27,18 @@ public class TicTacToe implements GuiCallback{
 	private JFrame frame;
     private PlayControl control;
     private ComputerPlayer computerPlayer;
-    private int winsForYou;
-    private int winsForComputer;
     private TTField[] buttons;
+    private JButton btnPlay;
+
 	private JPanel boardPanel;
     public enum ZeichenTyp {
         SPIELER,
         COMPUTER
     }
+
+    private int winsForYou;
+    private int winsForComputer;
+    private int winsForNone;
 
 
 	public static void main(String[] args) {
@@ -71,8 +76,8 @@ public class TicTacToe implements GuiCallback{
             public void actionPerformed(ActionEvent e) {
                 btnPlay.setEnabled(false);
                 control.reset();
-                resetButtons(); 
-                btnPlay.setEnabled(true); 
+                resetButtons();
+                btnPlay.setEnabled(true);
             }
         });
         
@@ -101,9 +106,9 @@ public class TicTacToe implements GuiCallback{
 		boardPanel.setLayout(new GridLayout(3, 3, 0, 0));
 
         createTTFields();
-        
+
 	}
-	
+
     private void createTTFields() {
 		buttons = new TTField[9];
         for (int i = 0; i < 9; i++) {
@@ -172,12 +177,21 @@ public class TicTacToe implements GuiCallback{
 
  
     private boolean checkGameOver() {
-    	if (!control.gameOver() && !control.playerHasWon() && !control.computerHasWon()) {
-    		return true;
-    	}else {
-    		return false;
-    	}
-           
+        String title;
+        if (control.playerHasWon()) {
+            winsForYou++;
+            title = "Du hast gewonnen!";
+        } else if (control.computerHasWon()) {
+            winsForComputer++;
+            title = "Computer hat gewonnen!";
+        } else if (control.gameOver()) {
+            winsForNone++;
+            title = "Unentschieden!";
+        } else return false;
+        enablePlayButton();
+        String message = "Du: " + winsForYou + "\nComputer: " + winsForComputer + "\nUnentschieden: " + winsForNone;
+        JOptionPane.showMessageDialog(frame, message, title, JOptionPane.INFORMATION_MESSAGE);
+        return true;
     }
 
 
@@ -191,6 +205,10 @@ public class TicTacToe implements GuiCallback{
                 updateButtons();
             });
         }
+    }
+
+    public void enablePlayButton() {
+        btnPlay.setEnabled(true);
     }
 
 
