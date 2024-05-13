@@ -29,6 +29,7 @@ public class TicTacToe implements GuiCallback{
     private int winsForYou;
     private int winsForComputer;
     private TTField[] buttons;
+	private JPanel boardPanel;
     public enum ZeichenTyp {
         SPIELER,
         COMPUTER
@@ -93,14 +94,18 @@ public class TicTacToe implements GuiCallback{
 		JTextArea textArea_1 = new JTextArea();
 		infoPanel.add(textArea_1, BorderLayout.CENTER);
 
-        JPanel boardPanel = new JPanel(new GridLayout(3, 3));
+        boardPanel = new JPanel(new GridLayout(3, 3));
         boardPanel.setMaximumSize(new Dimension(390, 390));
         boardPanel.setMinimumSize(new Dimension(390, 390));
 		frame.getContentPane().add(boardPanel, "cell 1 2 2 2,grow");
 		boardPanel.setLayout(new GridLayout(3, 3, 0, 0));
 
+        createTTFields();
         
-        buttons = new TTField[9];
+	}
+	
+    private void createTTFields() {
+		buttons = new TTField[9];
         for (int i = 0; i < 9; i++) {
             buttons[i] = new TTField(i, this); 
             final int index = i;
@@ -112,10 +117,6 @@ public class TicTacToe implements GuiCallback{
             });
             boardPanel.add(buttons[i]); 
         }
-	}
-	
-    private void createTTFields() {
-
     }
     
 
