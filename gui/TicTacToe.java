@@ -150,7 +150,7 @@ public class TicTacToe implements GuiCallback{
 		} else return false;
 		enablePlayButton();
 		String message = "Du: " + winsForYou + "\nComputer: " + winsForComputer + "\nUnentschieden: " + winsForNone;
-				JOptionPane.showMessageDialog(frame, message, title, JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(frame, message, title, JOptionPane.INFORMATION_MESSAGE);
     	return true;
 	}
 
