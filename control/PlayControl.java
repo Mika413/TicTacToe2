@@ -75,21 +75,11 @@ public class PlayControl {
     }
 
     public boolean playerHasWon() {
-		if (winnerIs() == player){
-			return true;
-		}
-		else{
-			return false;
-		}
+        return winnerIs() == player;
     }
 
     public boolean computerHasWon() {
-		if (winnerIs() == computer){
-			return true;
-		}
-		else{
-			return false;
-		}
+        return winnerIs() == computer;
     }
 
     public int[][] getBoard() {

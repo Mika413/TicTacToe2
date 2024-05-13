@@ -3,18 +3,13 @@ package gui;
 import java.awt.EventQueue;
 import java.util.Random;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import cPlayer.ComputerPlayer;
 import control.PlayControl;
 import net.miginfocom.swing.MigLayout;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -32,6 +27,7 @@ public class TicTacToe implements GuiCallback{
     
     private int winsForYou;
     private int winsForComputer;
+	private int winsForNone;
 
 
 	public static void main(String[] args) {
@@ -49,6 +45,7 @@ public class TicTacToe implements GuiCallback{
 
 	public TicTacToe() {
 		initialize();
+		checkGameOver();
 	}
 
 	private void initialize() {
@@ -141,8 +138,22 @@ public class TicTacToe implements GuiCallback{
 
  
     private boolean checkGameOver() {
-    	return false;
-    }
+		String title;
+    	if (control.playerHasWon()) {
+			winsForYou++;
+			title = "Du hast gewonnen!";
+		} else if (control.computerHasWon()) {
+			winsForComputer++;
+			title = "Computer hat gewonnen!";
+		} else if (control.gameOver()) {
+			winsForNone++;
+			title = "Unentschieden!";
+		} else return false;
+		enablePlayButton();
+		String message = "Du: " + winsForYou + "\nComputer: " + winsForComputer + "\nUnentschieden: " + winsForNone;
+				JOptionPane.showMessageDialog(frame, message, title, JOptionPane.INFORMATION_MESSAGE);
+    	return true;
+	}
 
 
     private void computerShallPlay() {
