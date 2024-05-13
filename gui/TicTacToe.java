@@ -209,6 +209,9 @@ public class TicTacToe implements GuiCallback{
             }
         }
     }
+	public void Punktestandanzeigen() {
+    	textArea_1.setText("Spieler:" +winsForYou);
+    }
     
 }
 	
