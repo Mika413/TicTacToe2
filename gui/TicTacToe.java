@@ -45,7 +45,6 @@ public class TicTacToe implements GuiCallback{
 
 	public TicTacToe() {
 		initialize();
-		checkGameOver();
 	}
 
 	private void initialize() {
