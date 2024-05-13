@@ -1,33 +1,36 @@
 package gui;
 
 import java.awt.EventQueue;
-import java.util.Random;
-
-import javax.swing.*;
-
-import cPlayer.ComputerPlayer;
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import cPlayer.VerySimplePlayer;
+import java.awt.Graphics;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import control.PlayControl;
 import net.miginfocom.swing.MigLayout;
-import java.awt.GridLayout;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import cPlayer.ComputerPlayer;
+import cPlayer.VerySimplePlayer;
+
 public class TicTacToe implements GuiCallback{
 
 	private JFrame frame;
-	private TTField fields;
-	private PlayControl control;
-	private ComputerPlayer player;
-    private JTextArea textArea;
-    private Timer timer;
-    private Random rand;
-	private static JButton btnPlay;
-    
+    private PlayControl control;
+    private ComputerPlayer computerPlayer;
     private int winsForYou;
     private int winsForComputer;
-	private int winsForNone;
+    private TTField[] buttons;
+    public enum ZeichenTyp {
+        SPIELER,
+        COMPUTER
+    }
 
 
 	public static void main(String[] args) {
@@ -49,77 +52,90 @@ public class TicTacToe implements GuiCallback{
 
 	private void initialize() {
 		control = new PlayControl();
+        computerPlayer = new VerySimplePlayer(control);
 		frame = new JFrame();
-		frame.setBounds(100, 100, 477, 500);
+		frame.setBounds(100, 100, 458, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new MigLayout("", "[10%][1%][grow]", "[7%][1%][grow]"));
-		
-		JPanel controlPanel = new JPanel();
-		frame.getContentPane().add(controlPanel, "cell 0 0 3 1,grow");
-		controlPanel.setLayout(new BorderLayout(0, 0));
-		
-		btnPlay = new JButton("Neues Spiel");
-		controlPanel.add(btnPlay, BorderLayout.WEST);
-		btnPlay.addActionListener(e -> {
-            btnPlay.setEnabled(false);
-            control.reset();
+        
+                JPanel controlPanel = new JPanel();
+                frame.getContentPane().add(controlPanel, "cell 2 0");
+                controlPanel.setLayout(new BorderLayout(0, 0));
+                
+        JButton btnPlay = new JButton("Neues Spiel");
+        controlPanel.add(btnPlay, BorderLayout.WEST);
+        btnPlay.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                btnPlay.setEnabled(false);
+                control.reset();
+                resetButtons(); 
+                btnPlay.setEnabled(true); 
+            }
         });
-		
-		JButton btnExit = new JButton("Exit");
-		controlPanel.add(btnExit, BorderLayout.EAST);
-		btnExit.addActionListener(e -> System.exit(0));
-		
-		JLabel label1 = new JLabel("");
-		controlPanel.add(label1, BorderLayout.CENTER);
-		
-		JPanel infoPanel = new JPanel();
+        
+                JButton btnExit = new JButton("Exit");
+                controlPanel.add(btnExit, BorderLayout.EAST);
+                btnExit.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        System.exit(0);
+                    }
+                });
+        
+        JPanel infoPanel = new JPanel();
 		frame.getContentPane().add(infoPanel, "cell 0 1 1 2,grow");
 		infoPanel.setLayout(new BorderLayout(0, 0));
 		
 		JTextArea textArea_1 = new JTextArea();
 		infoPanel.add(textArea_1, BorderLayout.CENTER);
-		
-		JPanel tttPanel = new JPanel();
-		tttPanel.setMaximumSize(new Dimension(390, 390));
-		tttPanel.setMinimumSize(new Dimension(390, 390));
-		frame.getContentPane().add(tttPanel, "cell 1 1 2 2,grow");
-		tttPanel.setLayout(new GridLayout(3, 3, 0, 0));
-		
-		JButton btnFeld1 = new JButton("");
-		btnFeld1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		tttPanel.add(btnFeld1);
-		
-		JButton btnFeld2 = new JButton("");
-		tttPanel.add(btnFeld2);
-		
-		JButton btnFeld3 = new JButton("");
-		tttPanel.add(btnFeld3);
-		
-		JButton btnFeld4 = new JButton("");
-		tttPanel.add(btnFeld4);
-		
-		JButton btnFeld5 = new JButton("");
-		tttPanel.add(btnFeld5);
-		
-		JButton btnFeld6 = new JButton("");
-		tttPanel.add(btnFeld6);
-		
-		JButton btnFeld7 = new JButton("");
-		tttPanel.add(btnFeld7);
-		
-		JButton btnFeld8 = new JButton("");
-		tttPanel.add(btnFeld8);
-		
-		JButton btnFeld9 = new JButton("");
-		tttPanel.add(btnFeld9);
+
+        JPanel boardPanel = new JPanel(new GridLayout(3, 3));
+        boardPanel.setMaximumSize(new Dimension(390, 390));
+        boardPanel.setMinimumSize(new Dimension(390, 390));
+		frame.getContentPane().add(boardPanel, "cell 1 1 2 2,grow");
+		boardPanel.setLayout(new GridLayout(3, 3, 0, 0));
+
+        
+        buttons = new TTField[9];
+        for (int i = 0; i < 9; i++) {
+            buttons[i] = new TTField(i, this); 
+            final int index = i;
+            buttons[i].setPreferredSize(new Dimension(100, 100)); 
+            buttons[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	playerHasChosen(index);
+                }
+            });
+            boardPanel.add(buttons[i]); 
+        }
 	}
 	
     private void createTTFields() {
 
     }
+    
+
+
+
+    private void resetButtons() {
+        for (JButton button : buttons) {
+            button.setEnabled(true);
+            ((TTField) button).clearSymbol();
+        }
+    }
+
+    private void updateButtons() { 
+        int[][] board = control.getBoard();
+        for (int i = 0; i < 9; i++) {
+            int row = i / 3;
+            int col = i % 3;
+            if (board[row][col] == 1) {
+                ((TTField) buttons[i]).setZeichenTyp(TTField.ZeichenTyp.SPIELER);
+            } else if (board[row][col] == 2) {
+                ((TTField) buttons[i]).setZeichenTyp(TTField.ZeichenTyp.COMPUTER);
+            }
+        }
+    }
+    
 
     private void disablePlayer() {
 
@@ -137,33 +153,41 @@ public class TicTacToe implements GuiCallback{
 
  
     private boolean checkGameOver() {
-		String title;
-    	if (control.playerHasWon()) {
-			winsForYou++;
-			title = "Du hast gewonnen!";
-		} else if (control.computerHasWon()) {
-			winsForComputer++;
-			title = "Computer hat gewonnen!";
-		} else if (control.gameOver()) {
-			winsForNone++;
-			title = "Unentschieden!";
-		} else return false;
-		enablePlayButton();
-		String message = "Du: " + winsForYou + "\nComputer: " + winsForComputer + "\nUnentschieden: " + winsForNone;
-		JOptionPane.showMessageDialog(frame, message, title, JOptionPane.INFORMATION_MESSAGE);
-    	return true;
-	}
+    	if (!control.gameOver() && !control.playerHasWon() && !control.computerHasWon()) {
+    		return true;
+    	}else {
+    		return false;
+    	}
+           
+    }
 
 
     private void computerShallPlay() {
-
+    	if (checkGameOver() == true) {
+            int computerMove = computerPlayer.draw(); 
+            control.computerSet(computerMove); 
+            buttons[computerMove].setEnabled(false); 
+            
+            SwingUtilities.invokeLater(() -> {
+                updateButtons();
+            });
+        }
     }
 
-    public void playerHasChosen(int nr) {
 
+    public void playerHasChosen(int index) {
+        if (checkGameOver() == true) {
+            if (control.fieldFree(index)) {
+                control.playerSet(index); 
+                buttons[index].setEnabled(false); 
+                
+                SwingUtilities.invokeLater(() -> {
+                    updateButtons();
+                });
+                computerShallPlay();
+                
+            }
+        }
     }
-
-	public static void enablePlayButton() {
-		btnPlay.setEnabled(true);
-	}
+	
 }

@@ -1,10 +1,12 @@
 package cPlayer;
 
+import control.PlayControl;
+
 public class ComputerHeuristik extends ComputerPlayer{
     private int[][] preferredMoves;
 
     public ComputerHeuristik(PlayControl pc) {
-        this.pc = pc;
+    	  super(pc);
     }
 
     public int draw() {

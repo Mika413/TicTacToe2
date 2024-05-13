@@ -1,17 +1,22 @@
 package cPlayer;
 
+import control.PlayControl;
+
 import java.util.Random;
 
-public class VerySimplePlayer extends ComputerPlayer{
+public class VerySimplePlayer extends ComputerPlayer {
     private Random rand;
 
-
     public VerySimplePlayer(PlayControl pc) {
-        this.pc = pc;
+        super(pc);
+        rand = new Random();
     }
 
     public int draw() {
-        return 0;
+        int whaelen;
+        do {
+        	whaelen = rand.nextInt(9);
+        } while (!control.fieldFree(whaelen));
+        return whaelen;
     }
 }
-

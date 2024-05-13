@@ -6,43 +6,36 @@ public class PlayControl {
     private final int computer = 2;
     private final int none = 0;
 
-    
-
     public void reset() {
-		for(int i=0; i<3; i++){
-			for(int j=0; j<3; j++){
-			    pField[i][j] = none;
-			}
-		}
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                pField[i][j] = none;
+            }
+        }
     }
 
     private void setPoint(int pos, int type) {
-		int row = pos / 3;
+        int row = pos / 3;
         int col = pos % 3;
         pField[row][col] = type;
     }
 
     public void playerSet(int nr) {
-		setPoint(nr, player);
+        setPoint(nr, player);
     }
 
     public void computerSet(int nr) {
-		setPoint(nr, computer);
+        setPoint(nr, computer);
     }
 
     public boolean fieldFree(int nr) {
-    	int row = nr / 3;
+        int row = nr / 3;
         int col = nr % 3;
-        if (pField[row][col] == none) {
-			return true;
-        }
-		else {
-			return false; 
-		}
+        return pField[row][col] == none;
     }
 
     private int winnerIs() {
-		for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             if (pField[i][0] == pField[i][1] && pField[i][1] == pField[i][2] && pField[i][0] != none) {
                 return pField[i][0];
             }
@@ -64,13 +57,13 @@ public class PlayControl {
     }
 
     public boolean gameOver() {
-		for(int i=0; i<3; i++){
-			for(int j=0; j<3; j++){
-				if( pField[i][j] == none) {
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                if( pField[i][j] == none) {
                     return false;
                 }
-			}
-		}
+            }
+        }
         return true;
     }
 
@@ -83,6 +76,6 @@ public class PlayControl {
     }
 
     public int[][] getBoard() {
-    	return pField;
+        return pField;
     }
 }
