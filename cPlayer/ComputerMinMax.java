@@ -2,10 +2,10 @@ package cPlayer;
 
 import control.PlayControl;
 
-public class ComputerHeuristik extends ComputerPlayer{
+public class ComputerMinMax extends ComputerPlayer{
     private int[][] preferredMoves;
 
-    public ComputerHeuristik(PlayControl pc) {
+    public ComputerMinMax(PlayControl pc) {
     	  super(pc);
     }
 

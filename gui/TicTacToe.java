@@ -2,12 +2,8 @@ package gui;
 
 import java.awt.EventQueue;
 import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+
 import cPlayer.VerySimplePlayer;
 import java.awt.Graphics;
 import java.awt.BorderLayout;
@@ -26,15 +22,18 @@ public class TicTacToe implements GuiCallback{
 	private JFrame frame;
     private PlayControl control;
     private ComputerPlayer computerPlayer;
-    private int winsForYou;
-    private int winsForComputer;
     private TTField[] buttons;
-	private JPanel boardPanel;
+    private JPanel boardPanel;
+    private JButton btnPlay;
+
     public enum ZeichenTyp {
         SPIELER,
-        COMPUTER
+        COMPUTER;
     }
 
+    private int winsForYou;
+    private int winsForComputer;
+    private int winsForNone;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -65,7 +64,7 @@ public class TicTacToe implements GuiCallback{
         frame.getContentPane().add(controlPanel, "cell 0 0 3 2,grow");
         controlPanel.setLayout(new BorderLayout(0, 0));
         
-        JButton btnPlay = new JButton("Neues Spiel");
+        btnPlay = new JButton("Neues Spiel");
         controlPanel.add(btnPlay, BorderLayout.WEST);
         btnPlay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -172,17 +171,29 @@ public class TicTacToe implements GuiCallback{
 
  
     private boolean checkGameOver() {
-    	if (!control.gameOver() && !control.playerHasWon() && !control.computerHasWon()) {
-    		return true;
-    	}else {
-    		return false;
-    	}
-           
+        String title;
+        if (control.playerHasWon()) {
+            winsForYou++;
+            title = "Du hast gewonnen!";
+        } else if (control.computerHasWon()) {
+            winsForComputer++;
+            title = "Computer hat gewonnen!";
+        } else if (control.gameOver()) {
+            winsForNone++;
+            title = "Unentschieden!";
+        } else return false;
+        enablePlayButton();
+        JOptionPane.showMessageDialog(frame, "", title, JOptionPane.INFORMATION_MESSAGE);
+        return true;
+    }
+
+    public void enablePlayButton() {
+        btnPlay.setEnabled(true);
     }
 
 
     private void computerShallPlay() {
-    	if (checkGameOver() == true) {
+    	if (!checkGameOver()) {
             int computerMove = computerPlayer.draw(); 
             control.computerSet(computerMove); 
             buttons[computerMove].setEnabled(false); 
@@ -195,7 +206,7 @@ public class TicTacToe implements GuiCallback{
 
 
     public void playerHasChosen(int index) {
-        if (checkGameOver() == true) {
+        if (!checkGameOver()) {
             if (control.fieldFree(index)) {
                 control.playerSet(index); 
                 buttons[index].setEnabled(false); 
@@ -210,7 +221,8 @@ public class TicTacToe implements GuiCallback{
         }
     }
 	public void Punktestandanzeigen() {
-    	textArea_1.setText("Spieler:" +winsForYou);
+        String stats = "Du: " + winsForYou + "\nComputer: " + winsForComputer + "\nUnentschieden: " + winsForNone;
+        textArea_1.setText("Spieler:" +winsForYou);
     }
     
 }
