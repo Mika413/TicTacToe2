@@ -14,6 +14,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import control.PlayControl;
 import net.miginfocom.swing.MigLayout;
 import cPlayer.ComputerPlayer;
@@ -138,17 +141,30 @@ public class TicTacToe implements GuiCallback{
     
 
     private void disablePlayer() {
-
+    	for (int i = 0; i < 9; i++) {
+    		buttons[i].setEnabled(false);
+    	}
     }
 
 
     private void enablePlayer() {
-
+    	for (int i = 0; i < 9; i++) {
+    		buttons[i].setEnabled(true);
+    	}
     }
 
 
     private void startTimerForComputer() {
-
+    	Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+               
+            	computerShallPlay();
+            	enablePlayer();
+                timer.cancel(); 
+            }
+        }, 3000);
     }
 
  
@@ -184,7 +200,8 @@ public class TicTacToe implements GuiCallback{
                 SwingUtilities.invokeLater(() -> {
                     updateButtons();
                 });
-                computerShallPlay();
+               disablePlayer();
+               startTimerForComputer();
                 
             }
         }
